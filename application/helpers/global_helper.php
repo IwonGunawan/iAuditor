@@ -4,35 +4,17 @@
 	{
 		$ci 	= get_instance();
 
-		$users_level 	= $ci->session->userdata("users_level");
+		$users_level 	= $ci->session->userdata("level");
 		$menu_current = $ci->uri->segment(1);
-		$menu_bumdes 	= array(
-									"reports",
-									"farmers_penyaluran", 
-									"farmers_pengembalian",  
-									"bumdes_penyaluran", 
-									"bumdes_pengembalian", 
-									"maps", 
-								);
-
 		
 		if ($users_level == "" || $users_level == null) 
 		{
-			$ci->session->set_flashdata("error", "No Access, please login");
+			$ci->session->set_flashdata("error", "login_no_access");
 	    redirect(base_url("logout"));
 		}
-		else
-		{
-			if ($users_level == config("LEVEL_BUMDES")) 
-			{
-				$index 	= array_search($menu_current, $menu_bumdes);
-				if ($menu_current !== $menu_bumdes[$index] && $ci->uri->segment(2) !== "changePass") 
-				{
-					redirect(base_url("404"));
-				}
-			}
-		}
 	}
+
+
 
 	function get_session($type="")
 	{
@@ -49,6 +31,8 @@
 
 		return $result[$type];
 	}
+
+
 
 	function menu_active($menu="")
 	{

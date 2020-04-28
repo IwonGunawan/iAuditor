@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="<?= base_url('assets/vendor/plugins/selectFX/css/cs-skin-elastic.css'); ?> ">
+<link rel="stylesheet" href="<?= base_url('assets/vendor/plugins/jqvmap/dist/jqvmap.min.css'); ?> ">
+
 <div class="content mt-3">
 
             <div class="col-sm-6 col-lg-3">
@@ -374,4 +377,29 @@
             </div>
 
 
-        </div> <!-- .content -->
+</div> <!-- .content -->
+
+    <script src="<?= base_url('assets/vendor/plugins/chart.js/dist/Chart.bundle.min.js'); ?> "></script>
+    <script src="<?= base_url('assets/vendor/assets/js/dashboard.js'); ?> "></script>
+    <script src="<?= base_url('assets/vendor/assets/js/widgets.js'); ?> "></script>
+    <script src="<?= base_url('assets/vendor/plugins/jqvmap/dist/jquery.vmap.min.js'); ?> "></script>
+    <script src="<?= base_url('assets/vendor/plugins/jqvmap/examples/js/jquery.vmap.sampledata.js'); ?> "></script>
+    <script src="<?= base_url('assets/vendor/plugins/jqvmap/dist/maps/jquery.vmap.world.js'); ?> "></script>
+    <script>
+        (function($) {
+            "use strict";
+
+            jQuery('#vmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#1de9b6',
+                enableZoom: true,
+                showTooltip: true,
+                values: sample_data,
+                scaleColors: ['#1de9b6', '#03a9f5'],
+                normalizeFunction: 'polynomial'
+            });
+        })(jQuery);
+    </script>
