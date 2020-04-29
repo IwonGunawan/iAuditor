@@ -18,11 +18,13 @@
             <li class="<?=menu_active('employee'); ?>">
                 <a href="<?=base_url('employee'); ?>"> <i class="menu-icon fa fa-user-plus"></i>Employee </a>
             </li>
-            <li>
-                <a href="#"> <i class="menu-icon fa fa-university"></i>Department </a>
+
+            <li class="<?=menu_active('training'); ?>">
+                <a href="<?=base_url('training');?>"> <i class="menu-icon fa fa-university"></i>Training Material</a>
             </li>
-            <li>
-                <a href="#"> <i class="menu-icon fa fa-cubes"></i>Category </a>
+            
+            <li class="<?=menu_active('checklist'); ?>">
+                <a href="<?=base_url('checklist');?>"> <i class="menu-icon fa fa-cubes"></i>Checklist </a>
             </li>
 
             <h3 class="menu-title">Reports</h3><!-- /.menu-title -->
