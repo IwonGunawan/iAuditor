@@ -45,7 +45,7 @@ class Employee extends CI_Controller
 
 
           $content[] = $no;
-          $content[] = $row['employeeNik'];
+          $content[] = "<a href='".base_url('employee/detail/'.$uuid)."'>".$row['employeeNik']."</a>";
           $content[] = $row['employeeName'];
           $content[] = $row['department'];
           $content[] = $row['officeMail'];
@@ -67,6 +67,24 @@ class Employee extends CI_Controller
                       "data" => $data,
               );
       echo json_encode($output);
+    }
+
+    public function detail($uuid="") 
+    {
+      $data["page"]       = "Detail";
+      $data["content"]    = "employee/v_detail";
+      $rowData            = $this->M_employee->edit($uuid);
+
+      if (count($rowData) > 0) 
+      {
+        $data["data"]       = $this->M_employee->detail($rowData);
+        
+        $this->load->view("app_template", $data); 
+      }
+      else 
+      {
+        redirect(base_url('employee'));  
+      }
     }
 
     public function create()
@@ -99,23 +117,22 @@ class Employee extends CI_Controller
       redirect(base_url($url));
     }
 
-    public function edit($bumdes_uuid="")
+    public function edit($uuid="")
     {
-      if ($bumdes_uuid != "") 
+      if ($uuid != "") 
       {
-        $data["title"]      = "Edit";
-        $data["content"]    = "bumdes/v_bumdes_create";
-        $data["page"]       = "edit";
-        $data["data"]       = $this->M_employee->edit($bumdes_uuid);
-        $data["district"]   = $this->M_farmers->districtList(); // kecamatan
-        $data["village"]    = $this->M_farmers->villageList($data['data']['district_id']); // desa
+        $data["page"]       = "Edit";
+        $data["content"]    = "employee/v_create";
+        $data["data"]       = $this->M_employee->edit($uuid);
+        $data["listSite"]   = $this->M_employee->listSite();
+        $data["listDept"]   = $this->M_employee->listDept();
 
         $this->load->view("app_template", $data);
       }
       else
       {
-        $this->session->set_flashdata("msg", "Data tidak valid");
-        return redirect(base_url("bumdes"));
+        $this->session->set_flashdata("msg", "Data not found");
+        return redirect(base_url("employee"));
       }
     }
 
@@ -123,15 +140,15 @@ class Employee extends CI_Controller
     {
       $post   = $this->input->post();
       
-      $msg  = "Gagal, silakan ulangi kembali!";
-      $url  = "bumdes";
+      $msg  = "Failed, try again!";
+      $url  = "employee";
 
       if (count($post) > 0) 
       {
-        $process  = $this->M_employee->update($post, $this->sess['users_id']);
+        $process  = $this->M_employee->update($post, $this->sess['usersId']);
         if ($process > 0) 
         {
-          $msg      = "Data berhasil diubah";
+          $msg      = "Data has been changed";
         }
       }
 
@@ -146,7 +163,7 @@ class Employee extends CI_Controller
         $process = $this->M_employee->delete($uuid);
         if ($process == TRUE) 
         {
-          $msg = "Data successfully deleted";
+          $msg = "Data deleted";
         }else
         {
           $msg = "Data failed to delete, try again!";
@@ -157,7 +174,7 @@ class Employee extends CI_Controller
         $msg = "No Data available";
       }
 
-      $this->session->set_flashdata("msg", $msg);
+      $this->session->set_flashdata("danger", $msg);
       return redirect(base_url("employee"));
     }    
 

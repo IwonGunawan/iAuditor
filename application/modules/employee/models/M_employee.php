@@ -126,39 +126,60 @@ class M_employee extends CI_Model
 		}
 	}
 
-  public function edit($bumdes_uuid="")
+  public function edit($uuid="")
   {
     $result   = array();
-    if ($bumdes_uuid !="") 
+    if ($uuid !="") 
     {
-      $this->db->where("bumdes_uuid", $bumdes_uuid);
-      $this->db->where("deleted", 0);
-      $query    = $this->db->get("bumdes");
+      $this->db->where("employeeUUID", $uuid);
+      $this->db->where("deleted", config("NOT_DELETED"));
+      $query    = $this->db->get("employee");
       $result   = $query->row_array();
     }
 
     return $result;
   }
 
-  public function update($post=array(), $users_id=0)
+  public function update($post=array(), $usersId=0)
   {
     if (count($post) > 0) 
     {
       //var defined
       $datenow  = date("Y-m-d H:i:s");
 
-      $data   = array(
-        "bumdes_name"        => $post['bumdes_name'], 
-        "bumdes_status"      => $post['bumdes_status'], 
-        "district_id"        => $post['district_id'], 
-        "village_id"         => $post['village_id'], 
-      );
+      $data 	= array(
+				"employeeNik" 			=> $post['employeeNik'], 
+				"employeeName" 			=> $post['employeeName'], 
+				"site"							=> $post['site'], 
+				"department"				=> $post['department'], 
+				"section" 					=> $post['section'], 
+				"jobPosition"				=> $post['jobPosition'], 
+				"level"							=> $post['level'], 
+				"subLevel"					=> $post['subLevel'], 
+				"officeMail"				=> $post['officeMail'], 
+				"modifiedBy"				=> $usersId, 
+				"modifiedTime"			=> $datenow, 
+			);
       
-      $this->db->where("bumdes_uuid", $post['bumdes_uuid']);
-      $update = $this->db->update("bumdes", $data);
+      $this->db->where("employeeUUID", $post['employeeUUID']);
+      $update = $this->db->update("employee", $data);
       
       return $update;
     }
+  }
+
+  public function detail($rowData=array())
+  {
+  	
+  	if (count($rowData) > 0) 
+  	{
+  		$rowData['site'] 				= $this->changeSite($rowData['site']);
+  		$rowData['department'] 	= $this->changeDept($rowData['department']);
+  		$rowData['createdBy']		= $this->changeBy($rowData['createdBy']);
+  		$rowData['modifiedBy']	= ($rowData['modifiedBy'] == null) ? "" : $this->changeBy($rowData['modifiedBy']);
+  	}
+
+  	return $rowData;
   }
 
   public function delete($uuid="")
@@ -195,6 +216,46 @@ class M_employee extends CI_Model
 
 		return $result->result_array();
 	}
+
+	public function changeSite($siteCode="") 
+  {
+  	$this->db->select("siteName");
+  	$this->db->from("site");
+  	$this->db->where("siteCode", $siteCode);
+  	$query = $this->db->get()->row_array();
+
+  	$result = $siteCode. " - ".$query['siteName'];
+
+  	return $result;
+  }
+
+  public function changeDept($departmentCode="") 
+  {
+  	$this->db->select("departmentName");
+  	$this->db->from("department");
+  	$this->db->where("departmentCode", $departmentCode);
+  	$query = $this->db->get()->row_array();
+
+  	$result = $departmentCode. " - ".$query['departmentName'];
+
+  	return $result;
+  }
+
+  public function changeBy($usersId=0)
+  {
+  	$result = "";
+  	if ($usersId != null && $usersId > 0) 
+  	{
+  		$this->db->select("fullName");
+  		$this->db->from("users");
+  		$this->db->where("usersId", $usersId);
+  		$query = $this->db->get()->row_array();
+
+  		$result = $query['fullName'];
+  	}
+
+  	return $result;
+  }
 
 	
 }

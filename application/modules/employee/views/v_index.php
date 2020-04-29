@@ -10,6 +10,11 @@
                 if($this->session->flashdata('msg')) 
                 { 
                   echo '<div class="alert alert-success" role="alert">'.$this->session->flashdata("msg").'</div>';
+                }
+
+                if($this->session->flashdata('danger')) 
+                { 
+                  echo '<div class="alert alert-danger" role="alert">'.$this->session->flashdata("danger").'</div>';
                 } 
               ?>
 
