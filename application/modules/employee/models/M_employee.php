@@ -257,5 +257,26 @@ class M_employee extends CI_Model
   	return $result;
   }
 
+  public function exportAll($limit=0)
+  {
+    $this->db->from("employee");
+    $this->db->where("deleted", config("NOT_DELETED"));
+    
+    if ($limit > 1) 
+    {
+      $this->db->limit($limit, 0);
+    }
+
+    $query  = $this->db->get();
+    $result = $query->result_array();
+
+    return $result;
+  }
+
+  public function exportSave($data=array())
+  {
+    $this->db->insert_batch('employee', $data);
+  }
+
 	
 }
