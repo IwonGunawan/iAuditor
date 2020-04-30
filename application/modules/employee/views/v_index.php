@@ -19,7 +19,9 @@
               ?>
 
               <div class="card-header">
-                  <a href="<?=base_url('employee/create'); ?>" class="btn btn-outline-primary"><i class="fa fa-plus"></i>&nbsp; Create New</a>
+                  <a href="<?=base_url('employee/create'); ?>" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Create New</a>
+                  <a href="<?=base_url('employee/export');?>" class="btn btn-outline-success"><i class="fa fa-download"></i>&nbsp; Export</a>
+                  <a href="<?=base_url('employee/import');?>" class="btn btn-outline-warning"><i class="fa fa-upload"></i>&nbsp; Import</a>
               </div>
               <div class="card-body">
                   <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
