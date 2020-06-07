@@ -9,18 +9,20 @@ class M_employee extends CI_Model
 	var $table = 'employee';
   var $column_order 	= array(
   								null, 
-  								'employeeNIK',
-  								'employeeName',
-  								'department', 
-  								'officeMail' 
+  								'a.employeeNIK',
+  								'a.employeeName',
+                  'a.site',
+  								'b.departmentName', 
+  								'a.officeMail' 
   							); 
   var $column_search 	= array(
-  								'employeeNIK',
-  								'employeeName',
-  								'department', 
-  								'officeMail' 
+  								'a.employeeNIK',
+  								'a.employeeName',
+                  'a.site',
+  								'b.departmentName', 
+  								'a.officeMail' 
   							);
-  var $order = array('createdTime' => 'DESC'); // default order 
+  var $order = array('a.createdTime' => 'DESC'); // default order 
 
 
 
@@ -47,9 +49,10 @@ class M_employee extends CI_Model
 
 	public function _query()
   {
-    $this->db->select("employeeUUID, employeeNik, employeeName, department, officeMail, createdTime");
-    $this->db->from("employee");
-    $this->db->where("deleted", config("NOT_DELETED"));
+    $this->db->select("a.employeeUUID, a.employeeNik, a.employeeName, a.site, b.departmentName, a.officeMail, a.createdTime");
+    $this->db->from("employee AS a");
+    $this->db->join("department as b", "a.department = b.departmentCode", "left");
+    $this->db->where("a.deleted", config("NOT_DELETED"));
 
     $i = 0;
  

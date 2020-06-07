@@ -51,16 +51,17 @@ class Employee extends CI_Controller
           $uuid      = $row['employeeUUID'];
 
 
-          $content[] = $no;
+          // $content[] = $no;
           $content[] = "<a href='".base_url('employee/detail/'.$uuid)."'>".$row['employeeNik']."</a>";
           $content[] = $row['employeeName'];
-          $content[] = $row['department'];
+          $content[] = $row['site'];
+          $content[] = $row['departmentName'];
           $content[] = $row['officeMail'];
 
           
           $btn = "
                   <a class='table-action hover-primary' href='".base_url('employee/edit/'.$uuid)."'><i class='ti-pencil'></i> Edit </a> | 
-                  <a class='table-action hover-danger' href='".base_url('employee/delete/'.$uuid)."' onclick='return confirm(\"DELETE DATA ?\")'><i class='ti-trash'></i> Delete</a>
+                  <a class='table-action hover-danger' href='".base_url('employee/delete/'.$uuid)."' onclick='return confirm(\"DELETE DATA ?\")'><i class='ti-trash'></i> Del</a>
                 ";
           $content[]  = $btn;
 

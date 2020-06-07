@@ -27,9 +27,10 @@
                   <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                            <th>No</th>
+                            <!-- <th>No</th> -->
                             <th>NIK</th>
                             <th>Name</th>
+                            <th>Site</th>
                             <th>Department</th>
                             <th>Email</th>
                             <th>Action</th>
@@ -74,7 +75,7 @@
       //Set column definition initialisation properties.
       "columnDefs": [
       { 
-          "targets": [ 0, 5 ], //first column / numbering column
+          "targets": [ 5 ], //first column / numbering column
           "orderable": false, //set not orderable
       },
       ],

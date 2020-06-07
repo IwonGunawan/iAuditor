@@ -145,36 +145,5 @@
     });
   });
 
-  // $('#save_form').on('submit', function(event)
-  // {
-
-  //   event.preventDefault();
-
-  //   $.ajax({
-  //     url     : "<?php echo base_url('employee/importSave');?>",
-  //     method  : "POST",
-  //     data    : new FormData(this),
-  //     contentType   :false,
-  //     cache         :false,
-  //     processData   :false,
-
-  //     success:function(result)
-  //     {
-  //       console.log(result)
-  //       // var a = JSON.parse(result);
-
-  //       // $('#container').html(a.table);
-  //       // document.getElementById('text_emp').value = a.data
-
-  //       // console.log(a.data)
-
-  //       // // show and hide button
-  //       // document.getElementById('import').style.display = "none";
-  //       // document.getElementById('save').style.display = "block";
-
-  //     }
-
-  //   });
-  // });
 
 </script>
